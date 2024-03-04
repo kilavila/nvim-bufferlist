@@ -60,11 +60,12 @@ end
 
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
-  -- get all buffers
+  -- get all buffers with buffer ID and file name
   local result = {}
   for _, buffer in ipairs(api.nvim_list_bufs()) do
-    if api.nvim_buf_is_loaded(buffer) then
-      table.insert(result, api.nvim_buf_get_name(buffer))
+    local name = api.nvim_buf_get_name(buffer)
+    if name ~= '' then
+      table.insert(result, buffer .. ' ' .. name)
     end
   end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
