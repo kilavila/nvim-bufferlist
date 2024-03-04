@@ -77,9 +77,12 @@ local function close_window()
 end
 
 local function go_to_buffer()
-  -- get selected buffer from bufferlist
-  local line = api.nvim_get_current_line()
-  local bufnr = string.match(line, '%d+')
+  -- get selected buffer from list, extract number and go to buffer
+  local selected = api.nvim_buf_get_lines(buf, api.nvim_win_get_cursor(win)[1] - 1, api.nvim_win_get_cursor(win)[1], false)[1]
+  local bufnr = selected:match('^%s*(%d+)')
+  if bufnr == nil then
+    return
+  end
   close_window()
   api.nvim_command('b ' .. bufnr)
 end
