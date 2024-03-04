@@ -91,13 +91,11 @@ local function set_mappings()
   local mappings = {
     ['<esc>'] = 'close_window()',
     ['<cr>'] = 'go_to_buffer()',
-    o = 'go_to_buffer()',
-    l = 'go_to_buffer()',
     q = 'close_window()',
     k = 'move_cursor()'
   }
   for k, v in pairs(mappings) do
-    api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"whid".' .. v .. '<cr>', {
+    api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"nvim-bufferlist".' .. v .. '<cr>', {
       nowait = true, noremap = true, silent = true
     })
   end
