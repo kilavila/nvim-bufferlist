@@ -17,8 +17,8 @@ local function open_window()
   local width = api.nvim_get_option("columns")
   local height = api.nvim_get_option("lines")
 
-  local win_height = math.ceil(height * 0.8 - 4)
-  local win_width = math.ceil(width * 0.8)
+  local win_height = math.ceil(height * 0.5 - 4)
+  local win_width = math.ceil(width * 0.5)
   local row = math.ceil((height - win_height) / 2 - 1)
   local col = math.ceil((width - win_width) / 2)
 
@@ -60,7 +60,13 @@ end
 
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
-  local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+  -- get all buffers
+  local buffers = {}
+  for _, buffer in ipairs(api.nvim_list_bufs()) do
+    if api.nvim_buf_is_loaded(buffer) then
+      table.insert(buffers, api.nvim_buf_get_name(buffer))
+    end
+  end
 
   local result = {}
   for _, buffer in ipairs(buffers) do
