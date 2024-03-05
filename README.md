@@ -31,3 +31,6 @@ Escape, q = Close window
 Enter, l  = Go to buffer
 h, d      = Close buffer
 ```
+<a href="https://dotfyle.com/plugins/{owner}/{name}">
+  <img src="https://dotfyle.com/plugins/{owner}/{name}/shield" />
+</a>
