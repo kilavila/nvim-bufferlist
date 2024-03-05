@@ -2,7 +2,7 @@
 
 <img src="./nvim-bufferlist.jpg" />
 
-My first ever Neovim plugin
+My first Neovim plugin
 
 Improved `:ls`
 
