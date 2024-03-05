@@ -103,6 +103,7 @@ local function set_mappings()
     ['<cr>'] = 'go_to_buffer()',
     l = 'go_to_buffer()',
     h = 'close_buffer()',
+    d = 'close_buffer()',
     q = 'close_window()',
   }
 
@@ -113,7 +114,7 @@ local function set_mappings()
   end
 
   local other_chars = {
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    'a', 'b', 'c', 'e', 'f', 'g', 'i', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
   }
 
   for _, v in ipairs(other_chars) do
