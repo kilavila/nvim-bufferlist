@@ -36,6 +36,3 @@ h, d      = Close buffer
 	<img src="https://dotfyle.com/plugins/kilavila/nvim-bufferlist/shield?style=flat" />
 </a>
 
-## Todo
-Features
-- Open/create new buffers
