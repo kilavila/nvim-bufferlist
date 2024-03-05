@@ -63,12 +63,12 @@ local function update_view()
   -- get all buffers with buffer ID and file name
   local result = {}
   for _, buffer in ipairs(api.nvim_list_bufs()) do
-    local name = api.nvim_buf_get_name(buffer)
-    name = name:gsub('^.*[/\\]', '')
     -- if buffer is modified, add asterisk
-    if api.nvim_buf_get_option(buffer, 'modified') then
-        table.insert(result, buffer .. ' ' .. name)
-    end
+    local name = api.nvim_buf_get_name(buffer)
+    local modified = api.nvim_buf_get_option(buffer, 'modified')
+    print(buffer, name, modified)
+    name = name:gsub('^.*[/\\]', '')
+    table.insert(result, buffer .. ' ' .. name)
   end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
   api.nvim_buf_set_option(buf, 'modifiable', true)
