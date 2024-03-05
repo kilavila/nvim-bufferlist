@@ -40,7 +40,8 @@ local function open_window()
     col = col
   }
 
-  local border_lines = { '╭ Buffer List ' .. string.rep('─', win_width) .. '╮' }
+  local border_title = ' Buffer List '
+  local border_lines = { '╭' .. border_title .. string.rep('─', win_width - string.len(border_title)) .. '╮' }
   local middle_line = '│' .. string.rep(' ', win_width) .. '│'
   for _ = 1, win_height do
     table.insert(border_lines, middle_line)
