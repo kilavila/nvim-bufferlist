@@ -39,4 +39,3 @@ h, d      = Close buffer
 ## Todo
 Features
 - Open/create new buffers
-- Highlight current buffer

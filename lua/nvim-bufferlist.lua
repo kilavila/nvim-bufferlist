@@ -82,6 +82,11 @@ local function close_window()
   api.nvim_win_close(win, true)
 end
 
+local function new_buffer()
+  api.nvim_command('tabnew')
+  update_view()
+end
+
 local function close_buffer()
   local selected_line = api.nvim_get_current_line()
 
@@ -127,6 +132,7 @@ local function set_mappings()
     ['<esc>'] = 'close_window()',
     ['<cr>'] = 'go_to_buffer()',
     l = 'go_to_buffer()',
+    n = 'new_buffer()',
     h = 'close_buffer()',
     d = 'close_buffer()',
     q = 'close_window()',
@@ -139,7 +145,7 @@ local function set_mappings()
   end
 
   local other_chars = {
-    'a', 'b', 'c', 'e', 'f', 'g', 'i', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    'a', 'b', 'c', 'e', 'f', 'g', 'i', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
   }
 
   for _, v in ipairs(other_chars) do
@@ -160,6 +166,7 @@ return {
   bufferlist = bufferlist,
   update_view = update_view,
   go_to_buffer = go_to_buffer,
+  new_buffer = new_buffer,
   close_buffer = close_buffer,
   move_cursor = move_cursor,
   close_window = close_window
