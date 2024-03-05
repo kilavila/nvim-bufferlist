@@ -60,18 +60,13 @@ end
 
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
-  -- get all buffers with buffer ID and file name
+  -- get buffers with command 'ls'
   local result = {}
-  for _, buffer in ipairs(api.nvim_list_bufs()) do
-    local name = api.nvim_buf_get_name(buffer)
-    -- format buffer name: [number] filename.extension
-    name = name:gsub('^.*[/\\]', '')
-    if name ~= '' then
-      table.insert(result, buffer .. ' ' .. name)
-    end
+  for _, v in ipairs(vim.api.nvim_list_bufs()) do
+    table.insert(result, api.nvim_buf_get_name(v))
   end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
-  api.nvim_buf_set_option(buf, 'modifiable', false)
+  api.nvim_buf_set_option(buf, 'modifiable', true)
 end
 
 local function close_window()
