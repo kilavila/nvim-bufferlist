@@ -64,14 +64,15 @@ local function update_view()
   local result = {}
   for _, buffer in ipairs(api.nvim_list_bufs()) do
     local name = api.nvim_buf_get_name(buffer)
-    -- format buffer name: [number] filename.extension
+    local byftype = api.nvim_buf_get_option(buffer, 'buftype')
+    print(buffer, name, byftype)
     name = name:gsub('^.*[/\\]', '')
     if name ~= '' then
-      table.insert(result, buffer .. ' ' .. name)
+        table.insert(result, buffer .. ' ' .. name)
     end
   end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
-  api.nvim_buf_set_option(buf, 'modifiable', false)
+  api.nvim_buf_set_option(buf, 'modifiable', true)
 end
 
 local function close_window()
@@ -81,8 +82,8 @@ end
 local function go_to_buffer()
   local line = api.nvim_get_current_line()
   local bufnr = string.match(line, '%d+')
-  api.nvim_command('b ' .. bufnr)
   close_window()
+  api.nvim_command('b ' .. bufnr)
 end
 
 local function move_cursor()
