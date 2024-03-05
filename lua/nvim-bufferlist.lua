@@ -64,6 +64,8 @@ local function update_view()
   local result = {}
   for _, buffer in ipairs(api.nvim_list_bufs()) do
     local name = api.nvim_buf_get_name(buffer)
+    -- format buffer name: [number] filename.extension
+    name = name:gsub('^.*[/\\]', '')
     if name ~= '' then
       table.insert(result, buffer .. ' ' .. name)
     end
@@ -77,13 +79,9 @@ local function close_window()
 end
 
 local function go_to_buffer()
-  -- get selected buffer from list
   local line = api.nvim_get_current_line()
-  -- get buffer number from line: [bufnr] filename
   local bufnr = string.match(line, '%d+')
-  -- go to buffer
-  print('b ' .. bufnr)
-  -- api.nvim_command('b ' .. bufnr)
+  api.nvim_command('b ' .. bufnr)
   close_window()
 end
 
