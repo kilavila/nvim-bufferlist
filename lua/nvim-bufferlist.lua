@@ -32,7 +32,6 @@ local function open_window()
   }
 
   local opts = {
-    title = ' Buffer List ',
     style = 'minimal',
     relative = 'editor',
     width = win_width,
@@ -41,7 +40,8 @@ local function open_window()
     col = col
   }
 
-  local border_lines = { '╭' .. string.rep('─', win_width) .. '╮' }
+  local border_title = ' Buffer List '
+  local border_lines = { '╭' .. border_title .. string.rep('─', win_width - string.len(border_title)) .. '╮' }
   local middle_line = '│' .. string.rep(' ', win_width) .. '│'
   for _ = 1, win_height do
     table.insert(border_lines, middle_line)
@@ -88,8 +88,15 @@ local function close_buffer()
 
   for buffer in string.gmatch(ls, '([^\r\n]*)') do
     if string.match(buffer, '%d+') and string.match(buffer, '"(.-)"') == selected_line then
-      api.nvim_command('bd ' .. string.match(buffer, '%d+'))
-      update_view()
+
+      -- if current buffer is not the one to be closed
+      if string.match(buffer, '%d+') ~= api.nvim_get_current_buf() then
+        api.nvim_command('bd ' .. string.match(buffer, '%d+'))
+        update_view()
+      else
+        close_window()
+        api.nvim_command('bd')
+      end
     end
   end
 end
