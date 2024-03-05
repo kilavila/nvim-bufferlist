@@ -18,7 +18,7 @@ local function open_window()
   local height = api.nvim_get_option("lines")
 
   local win_height = math.ceil(height * 0.5 - 4)
-  local win_width = math.ceil(width * 0.5)
+  local win_width = math.ceil(width * 0.3)
   local row = math.ceil((height - win_height) / 2 - 1)
   local col = math.ceil((width - win_width) / 2)
 
@@ -64,10 +64,8 @@ local function update_view()
   local result = {}
   for _, buffer in ipairs(api.nvim_list_bufs()) do
     local name = api.nvim_buf_get_name(buffer)
-    local byftype = api.nvim_buf_get_option(buffer, 'buftype')
-    print(buffer, name, byftype)
     name = name:gsub('^.*[/\\]', '')
-    if name ~= '' then
+    if api.nvim_buf_get_option(buffer, 'buftype') ~= 'nofile' then
         table.insert(result, buffer .. ' ' .. name)
     end
   end
