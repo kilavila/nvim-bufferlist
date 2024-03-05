@@ -40,7 +40,7 @@ local function open_window()
     col = col
   }
 
-  local border_title = ' Buffer List '
+  local border_title = '  Buffer List '
   local border_lines = { '╭' .. border_title .. string.rep('─', win_width - string.len(border_title)) .. '╮' }
   local middle_line = '│' .. string.rep(' ', win_width) .. '│'
   for _ = 1, win_height do
@@ -89,10 +89,16 @@ local function close_buffer()
 end
 
 local function go_to_buffer()
-  local line = api.nvim_get_current_line()
-  local bufnr = string.match(line, '%d+')
-  close_window()
-  api.nvim_command('b ' .. bufnr)
+  local selected_line = api.nvim_get_current_line()
+
+  local ls = vim.fn.execute(':ls')
+
+  for buffer in string.gmatch(ls, '([^\r\n]*)') do
+    if string.match(buffer, '%d+') and string.match(buffer, '"(.-)"') == selected_line then
+      close_window()
+      api.nvim_command('b ' .. string.match(buffer, '%d+'))
+    end
+  end
 end
 
 local function move_cursor()
