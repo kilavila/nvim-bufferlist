@@ -82,7 +82,7 @@ local function close_buffer()
   local line = api.nvim_get_current_line()
   local bufnr = string.match(line, '%d+')
   api.nvim_command('bd ' .. bufnr)
-  -- close_window()
+  update_view()
 end
 
 local function go_to_buffer()
