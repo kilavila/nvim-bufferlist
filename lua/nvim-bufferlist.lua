@@ -71,7 +71,7 @@ local function update_view()
   end
 
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
-  api.nvim_buf_set_option(buf, 'modifiable', true)
+  api.nvim_buf_set_option(buf, 'modifiable', false)
 end
 
 local function close_window()
