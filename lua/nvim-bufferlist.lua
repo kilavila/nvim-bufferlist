@@ -129,7 +129,7 @@ local function bufferlist()
   open_window()
   update_view()
   set_mappings()
-  api.nvim_win_set_cursor(win, { 2, 0 })
+  api.nvim_win_set_cursor(win, { 3, 0 })
 end
 
 return {
