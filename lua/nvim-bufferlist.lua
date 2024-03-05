@@ -102,7 +102,7 @@ local function set_mappings()
     ['<esc>'] = 'close_window()',
     ['<cr>'] = 'go_to_buffer()',
     l = 'go_to_buffer()',
-    c = 'close_buffer()',
+    h = 'close_buffer()',
     q = 'close_window()',
   }
 
