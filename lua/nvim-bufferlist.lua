@@ -88,7 +88,8 @@ local function close_buffer()
 
   for buffer in string.gmatch(ls, '([^\r\n]*)') do
     if string.match(buffer, '%d+') and string.match(buffer, '"(.-)"') == selected_line then
-      if string.match(buffer, '"(.-)"') == api.nvim_get_current_buf() then
+      print(buffer, api.nvim_get_current_buf())
+      if buffer == api.nvim_get_current_buf() then
         close_window()
         api.nvim_command('bd')
       else
