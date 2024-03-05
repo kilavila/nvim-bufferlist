@@ -40,7 +40,7 @@ local function open_window()
     col = col
   }
 
-  local border_lines = { '╭' .. string.rep('─', win_width) .. '╮' }
+  local border_lines = { '╭ Buffer List ' .. string.rep('─', win_width) .. '╮' }
   local middle_line = '│' .. string.rep(' ', win_width) .. '│'
   for _ = 1, win_height do
     table.insert(border_lines, middle_line)
@@ -54,8 +54,8 @@ local function open_window()
 
   api.nvim_win_set_option(win, 'cursorline', true)
 
-  api.nvim_buf_set_lines(buf, 0, -1, false, { center('Buffer List'), '', '' })
-  api.nvim_buf_add_highlight(buf, -1, 'BufferListHeader', 0, 0, -1)
+  -- api.nvim_buf_set_lines(buf, 0, -1, false, { center('Buffer List'), '', '' })
+  -- api.nvim_buf_add_highlight(buf, -1, 'BufferListHeader', 0, 0, -1)
 end
 
 local function update_view()
@@ -66,11 +66,13 @@ local function update_view()
 
   for line in string.gmatch(ls, '([^\r\n]*)') do
     if string.match(line, '%d+') then
+      -- get text between quotes
+      line = string.match(line, '"(.-)"')
       table.insert(result, line)
     end
   end
 
-  api.nvim_buf_set_lines(buf, 2, -1, false, result)
+  api.nvim_buf_set_lines(buf, 1, -1, false, result)
   api.nvim_buf_set_option(buf, 'modifiable', false)
 end
 
@@ -128,7 +130,7 @@ local function bufferlist()
   open_window()
   update_view()
   set_mappings()
-  api.nvim_win_set_cursor(win, { 3, 0 })
+  api.nvim_win_set_cursor(win, { 1, 0 })
 end
 
 return {
