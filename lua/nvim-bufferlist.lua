@@ -64,7 +64,7 @@ local function update_view()
 
   for buffer in string.gmatch(ls, '([^\r\n]*)') do
     if string.match(buffer, '%d+') then
-      if string.match(buffer, '%d+.-(a).-".-"') == 'a' then
+      if string.match(buffer, '%d+.-(a).-".-"') == 'a' and string.match(buffer, '"(.-)"') ~= '[No Name]' then
         buffer = string.match(buffer, '"(.-)"')
         table.insert(result, "> " .. buffer)
       else
@@ -84,7 +84,7 @@ end
 
 local function new_buffer()
   api.nvim_command('tabnew')
-  update_view()
+  close_window()
 end
 
 local function close_buffer()
