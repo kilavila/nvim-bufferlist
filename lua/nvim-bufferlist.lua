@@ -22,14 +22,14 @@ local function open_window()
   local row = math.ceil((height - win_height) / 2 - 1)
   local col = math.ceil((width - win_width) / 2)
 
-  local border_opts = {
-    style = 'minimal',
-    relative = 'editor',
-    width = win_width + 2,
-    height = win_height + 2,
-    row = row - 1,
-    col = col - 1
-  }
+  -- local border_opts = {
+  --   style = 'minimal',
+  --   relative = 'editor',
+  --   width = win_width + 2,
+  --   height = win_height + 2,
+  --   row = row - 1,
+  --   col = col - 1
+  -- }
 
   local opts = {
     style = 'minimal',
@@ -40,28 +40,27 @@ local function open_window()
     col = col
   }
 
-  local border_lines = { '╔' .. string.rep('═', win_width) .. '╗' }
-  local middle_line = '║' .. string.rep(' ', win_width) .. '║'
-  for i = 1, win_height do
+  local border_lines = { '╭' .. string.rep('─', win_width) .. '╮' }
+  local middle_line = '│' .. string.rep(' ', win_width) .. '│'
+  for _ = 1, win_height do
     table.insert(border_lines, middle_line)
   end
-  table.insert(border_lines, '╚' .. string.rep('═', win_width) .. '╝')
+  table.insert(border_lines, '╰' .. string.rep('─', win_width) .. '╯')
   api.nvim_buf_set_lines(border_buf, 0, -1, false, border_lines)
 
-  local border_win = api.nvim_open_win(border_buf, true, border_opts)
+  -- local border_win = api.nvim_open_win(border_buf, true, border_opts)
   win = api.nvim_open_win(buf, true, opts)
   api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "' .. border_buf)
 
   api.nvim_win_set_option(win, 'cursorline', true)
 
-  api.nvim_buf_set_lines(buf, 0, -1, false, { center('Modified buffers'), '', '' })
+  api.nvim_buf_set_lines(buf, 0, -1, false, { center('Buffer List'), '', '' })
   api.nvim_buf_add_highlight(buf, -1, 'BufferListHeader', 0, 0, -1)
 end
 
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
 
-  -- get buffer list from vim command ':ls'
   local ls = vim.fn.execute(':ls')
   local result = {}
 
@@ -71,22 +70,19 @@ local function update_view()
     end
   end
 
-  -- get all buffers with buffer ID and file name
-  -- local result = {}
-  -- for _, buffer in ipairs(api.nvim_list_bufs()) do
-  --   -- if buffer is modified, add asterisk
-  --   local name = api.nvim_buf_get_name(buffer)
-  --   local modified = api.nvim_buf_get_option(buffer, 'modified')
-  --   print(buffer, name, modified)
-  --   name = name:gsub('^.*[/\\]', '')
-  --   table.insert(result, buffer .. ' ' .. name)
-  -- end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
   api.nvim_buf_set_option(buf, 'modifiable', true)
 end
 
 local function close_window()
   api.nvim_win_close(win, true)
+end
+
+local function delete_buffer()
+  local line = api.nvim_get_current_line()
+  local bufnr = string.match(line, '%d+')
+  close_window()
+  api.nvim_command('bd ' .. bufnr)
 end
 
 local function go_to_buffer()
@@ -105,6 +101,10 @@ local function set_mappings()
   local mappings = {
     ['<esc>'] = 'close_window()',
     ['<cr>'] = 'go_to_buffer()',
+    h = 'close_window()',
+    l = 'go_to_buffer()',
+    d = 'delete_buffer()',
+    c = 'delete_buffer()',
     q = 'close_window()',
   }
 
@@ -118,7 +118,7 @@ local function set_mappings()
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
   }
 
-  for k, v in ipairs(other_chars) do
+  for _, v in ipairs(other_chars) do
     api.nvim_buf_set_keymap(buf, 'n', v, '', { nowait = true, noremap = true, silent = true })
     api.nvim_buf_set_keymap(buf, 'n', v:upper(), '', { nowait = true, noremap = true, silent = true })
     api.nvim_buf_set_keymap(buf, 'n', '<c-' .. v .. '>', '', { nowait = true, noremap = true, silent = true })
@@ -127,14 +127,15 @@ end
 
 local function bufferlist()
   open_window()
-  set_mappings()
   update_view()
-  api.nvim_win_set_cursor(win, { 4, 0 })
+  set_mappings()
+  api.nvim_win_set_cursor(win, { 2, 0 })
 end
 
 return {
   bufferlist = bufferlist,
   update_view = update_view,
+  delete_buffer = delete_buffer,
   go_to_buffer = go_to_buffer,
   move_cursor = move_cursor,
   close_window = close_window
