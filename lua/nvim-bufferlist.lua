@@ -81,8 +81,8 @@ end
 local function go_to_buffer()
   local line = api.nvim_get_current_line()
   local bufnr = string.match(line, '%d+')
-  api.nvim_command('b ' .. bufnr)
   close_window()
+  api.nvim_command('b ' .. bufnr)
 end
 
 local function move_cursor()
