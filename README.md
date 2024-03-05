@@ -35,3 +35,9 @@ h, d      = Close buffer
 <a href="https://dotfyle.com/plugins/kilavila/nvim-bufferlist">
 	<img src="https://dotfyle.com/plugins/kilavila/nvim-bufferlist/shield?style=flat" />
 </a>
+
+## Todo
+- Make window title part of border(not inside window)
+- Only list path + filenames
+- Open/create new buffers
+- Add keybinds for quick actions(without opening window)
