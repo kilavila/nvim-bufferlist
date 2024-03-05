@@ -32,17 +32,16 @@ local function open_window()
   }
 
   local opts = {
+    title = ' Buffer List ',
     style = 'minimal',
     relative = 'editor',
     width = win_width,
     height = win_height,
     row = row,
-    col = col,
-    padding = { 1, 1, 1, 1 },
+    col = col
   }
 
-  local border_title = ' Buffer List '
-  local border_lines = { '╭' .. border_title .. string.rep('─', win_width - string.len(border_title)) .. '╮' }
+  local border_lines = { '╭' .. string.rep('─', win_width) .. '╮' }
   local middle_line = '│' .. string.rep(' ', win_width) .. '│'
   for _ = 1, win_height do
     table.insert(border_lines, middle_line)
