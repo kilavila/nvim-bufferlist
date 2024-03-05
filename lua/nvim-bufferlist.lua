@@ -81,7 +81,6 @@ end
 local function delete_buffer()
   local line = api.nvim_get_current_line()
   local bufnr = string.match(line, '%d+')
-  print('bd ' .. bufnr)
   api.nvim_command('bd ' .. bufnr)
   close_window()
 end
@@ -103,7 +102,7 @@ local function set_mappings()
     ['<esc>'] = 'close_window()',
     ['<cr>'] = 'go_to_buffer()',
     l = 'go_to_buffer()',
-    d = 'delete_buffer()',
+    h = 'delete_buffer()',
     q = 'close_window()',
   }
 
@@ -134,8 +133,8 @@ end
 return {
   bufferlist = bufferlist,
   update_view = update_view,
-  delete_buffer = delete_buffer,
   go_to_buffer = go_to_buffer,
+  delete_buffer = delete_buffer,
   move_cursor = move_cursor,
   close_window = close_window
 }
