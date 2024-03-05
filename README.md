@@ -1,4 +1,7 @@
 # Buffer List
+
+<img src="./nvim-bufferlist.jpg" />
+
 My first ever Neovim plugin
 
 Improved `:ls`
