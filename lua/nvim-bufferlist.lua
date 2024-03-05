@@ -62,8 +62,8 @@ local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
   -- get buffers with command 'ls'
   local result = {}
-  for _, v in ipairs(vim.api.nvim_list_bufs()) do
-    table.insert(result, api.nvim_buf_get_name(v))
+  for _, line in api.nvim_command('ls') do
+    table.insert(result, center(line))
   end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
   api.nvim_buf_set_option(buf, 'modifiable', true)
