@@ -60,16 +60,27 @@ end
 
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
-  -- get all buffers with buffer ID and file name
+
+  -- get buffer list from vim command ':ls'
+  local ls = vim.fn.execute(':ls')
   local result = {}
-  for _, buffer in ipairs(api.nvim_list_bufs()) do
-    -- if buffer is modified, add asterisk
-    local name = api.nvim_buf_get_name(buffer)
-    local modified = api.nvim_buf_get_option(buffer, 'modified')
-    print(buffer, name, modified)
-    name = name:gsub('^.*[/\\]', '')
-    table.insert(result, buffer .. ' ' .. name)
+
+  for line in string.gmatch(ls, '([^\r\n]*)') do
+    if string.match(line, '%d+') then
+      table.insert(result, line)
+    end
   end
+
+  -- get all buffers with buffer ID and file name
+  -- local result = {}
+  -- for _, buffer in ipairs(api.nvim_list_bufs()) do
+  --   -- if buffer is modified, add asterisk
+  --   local name = api.nvim_buf_get_name(buffer)
+  --   local modified = api.nvim_buf_get_option(buffer, 'modified')
+  --   print(buffer, name, modified)
+  --   name = name:gsub('^.*[/\\]', '')
+  --   table.insert(result, buffer .. ' ' .. name)
+  -- end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
   api.nvim_buf_set_option(buf, 'modifiable', true)
 end

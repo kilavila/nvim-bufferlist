@@ -5,7 +5,6 @@ set cpo&vim
 
 hi def link BufferListHeader      Number
 
-
 command! BufferList lua require'nvim-bufferlist'.bufferlist()
 
 let &cpo = s:save_cpo
