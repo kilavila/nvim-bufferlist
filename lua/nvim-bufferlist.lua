@@ -126,7 +126,7 @@ end
 return {
   bufferlist = bufferlist,
   update_view = update_view,
-  go_to_buffe = go_to_buffer,
+  go_to_buffer = go_to_buffer,
   move_cursor = move_cursor,
   close_window = close_window
 }
