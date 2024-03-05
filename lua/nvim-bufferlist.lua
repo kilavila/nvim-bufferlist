@@ -60,13 +60,16 @@ end
 
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
-  -- get buffers with format: [bufnr] [id] + [buffer name] [linenumber]
-  local result = {}
-  for _, v in ipairs(api.nvim_list_bufs()) do
-    if v ~= buf then
-      local name = api.nvim_buf_get_name(v)
-      table.insert(result, string.format('%d %s', v, name))
+  -- only get buffers loaded by user, set list format: bufnr bufname current_line_number
+  local buffers = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      table.insert(buffers, { buf, vim.api.nvim_buf_get_name(buf), vim.api.nvim_buf_line_count(buf) })
     end
+  end
+  local result = {}
+  for i, buf in ipairs(buffers) do
+    table.insert(result, string.format('%d %s %d', buf[1], buf[2], buf[3]))
   end
   api.nvim_buf_set_lines(buf, 2, -1, false, result)
   api.nvim_buf_set_option(buf, 'modifiable', true)
