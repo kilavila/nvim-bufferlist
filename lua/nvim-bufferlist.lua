@@ -54,7 +54,7 @@ local function open_window()
 
   api.nvim_win_set_option(win, 'cursorline', true)
 
-  api.nvim_buf_set_lines(buf, 0, -1, false, { center('Open buffers'), '', '' })
+  api.nvim_buf_set_lines(buf, 0, -1, false, { center('Modified buffers'), '', '' })
   api.nvim_buf_add_highlight(buf, -1, 'BufferListHeader', 0, 0, -1)
 end
 
@@ -65,7 +65,8 @@ local function update_view()
   for _, buffer in ipairs(api.nvim_list_bufs()) do
     local name = api.nvim_buf_get_name(buffer)
     name = name:gsub('^.*[/\\]', '')
-    if api.nvim_buf_get_option(buffer, 'buftype') ~= 'nofile' then
+    -- if buffer is modified, add asterisk
+    if api.nvim_buf_get_option(buffer, 'modified') then
         table.insert(result, buffer .. ' ' .. name)
     end
   end
