@@ -82,7 +82,8 @@ local function go_to_buffer()
   -- get buffer number from line: [bufnr] filename
   local bufnr = string.match(line, '%d+')
   -- go to buffer
-  api.nvim_command('b ' .. bufnr)
+  print('b ' .. bufnr)
+  -- api.nvim_command('b ' .. bufnr)
   close_window()
 end
 
