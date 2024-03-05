@@ -54,9 +54,6 @@ local function open_window()
   api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "' .. border_buf)
 
   api.nvim_win_set_option(win, 'cursorline', true)
-
-  -- api.nvim_buf_set_lines(buf, 0, -1, false, { center('Buffer List'), '', '' })
-  -- api.nvim_buf_add_highlight(buf, -1, 'BufferListHeader', 0, 0, -1)
 end
 
 local function update_view()
@@ -65,11 +62,15 @@ local function update_view()
   local ls = vim.fn.execute(':ls')
   local result = {}
 
-  for line in string.gmatch(ls, '([^\r\n]*)') do
-    if string.match(line, '%d+') then
-      -- get text between quotes
-      line = string.match(line, '"(.-)"')
-      table.insert(result, line)
+  for buffer in string.gmatch(ls, '([^\r\n]*)') do
+    if string.match(buffer, '%d+') then
+      if string.match(buffer, '%d+.-(a).-".-"') == 'a' then
+        buffer = string.match(buffer, '"(.-)"')
+        table.insert(result, "> " .. buffer)
+      else
+        buffer = string.match(buffer, '"(.-)"')
+        table.insert(result, buffer)
+      end
     end
   end
 

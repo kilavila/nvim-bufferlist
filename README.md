@@ -37,12 +37,6 @@ h, d      = Close buffer
 </a>
 
 ## Todo
-Fixes
-    - Can't close current buffer
-    - Make window title part of border(not inside window)
-    - Only list path + filenames
-
 Features
 - Open/create new buffers
-- Add keybinds for quick actions(without opening window)
 - Highlight current buffer
