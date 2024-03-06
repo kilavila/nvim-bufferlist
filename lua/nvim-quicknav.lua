@@ -59,7 +59,8 @@ local function add_current_file()
   local cwd = vim.fn.getcwd()
 
   -- remove cwd from current file
-  local relative = string.gsub(current_file, cwd .. '/', '')
+  local relative = string.gsub(current_file, cwd,  '')
+  print(cwd)
   print(relative)
 
   table.insert(pinned_files, relative)
