@@ -54,6 +54,7 @@ end
 
 local function add_current_file()
   local current_file = api.nvim_buf_get_name(0)
+  current_file = tostring(current_file)
 
   -- get current working directory with full path
   local cwd = vim.fn.getcwd()
@@ -61,6 +62,7 @@ local function add_current_file()
 
   -- remove cwd from current file
   local relative = string.gsub(current_file, cwd,  '')
+  relative = tostring(relative)
   print(cwd)
   print(relative)
 
