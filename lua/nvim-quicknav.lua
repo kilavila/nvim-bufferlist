@@ -53,9 +53,16 @@ local function open_window()
 end
 
 local function add_current_file()
-  local current_file = vim.fn.expand('%')
+  local buffer_list = vim.fn.execute(':ls')
 
-  table.insert(pinned_files, current_file)
+  for buffer in string.gmatch(buffer_list, '([^\r\n]*)') do
+    if string.match(buffer, '%d+') then
+      if string.match(buffer, '%d+.-(%a).-".-"') == '%a' then
+        buffer = string.match(buffer, '"(.-)"')
+        table.insert(pinned_files, buffer)
+      end
+    end
+  end
 end
 
 local function update_view()
