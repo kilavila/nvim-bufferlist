@@ -60,12 +60,7 @@ end
 local function update_view()
   api.nvim_buf_set_option(buf, 'modifiable', true)
 
-  local result = {}
-  for _, file in ipairs(pinned_files) do
-    table.insert(pinned_files, file)
-  end
-
-  api.nvim_buf_set_lines(buf, 0, -1, false, result)
+  api.nvim_buf_set_lines(buf, 0, -1, false, pinned_files)
   api.nvim_buf_set_option(buf, 'modifiable', true)
 end
 
