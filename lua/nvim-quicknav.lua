@@ -53,16 +53,8 @@ local function open_window()
 end
 
 local function add_current_file()
-  local buffer_list = vim.fn.execute(':ls')
-
-  for buffer in string.gmatch(buffer_list, '([^\r\n]*)') do
-    if string.match(buffer, '%d+') then
-      if string.match(buffer, '%d+.-(%%a).-".-"') == '%a' then
-        buffer = string.match(buffer, '"(.-)"')
-        table.insert(pinned_files, buffer)
-      end
-    end
-  end
+  local current_file = api.nvim_buf_get_name(0)
+  table.insert(pinned_files, current_file)
 end
 
 local function update_view()
@@ -75,8 +67,6 @@ end
 local function update_pinned_files()
   pinned_files = {}
   local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
-
-  print('Lines in window: ' .. #lines)
 
   if #lines ~= 0 then
     for _, line in ipairs(lines) do
@@ -127,6 +117,48 @@ local function set_mappings()
   end ]]
 end
 
+local function go_to_next_file()
+  local current_file = api.nvim_buf_get_name(0)
+
+  local current_file_pos = 0
+  for i, file in ipairs(pinned_files) do
+    if file == current_file then
+      current_file_pos = i
+      break
+    end
+  end
+
+  local next_file_pos = current_file_pos + 1
+  if next_file_pos > #pinned_files then
+    next_file_pos = 1
+  end
+  local next_file = pinned_files[next_file_pos]
+
+  close_window()
+  api.nvim_command('edit ' .. next_file)
+end
+
+local function go_to_prev_file()
+  local current_file = api.nvim_buf_get_name(0)
+
+  local current_file_pos = 0
+  for i, file in ipairs(pinned_files) do
+    if file == current_file then
+      current_file_pos = i
+      break
+    end
+  end
+
+  local prev_file_pos = current_file_pos - 1
+  if prev_file_pos < 1 then
+    prev_file_pos = #pinned_files
+  end
+  local prev_file = pinned_files[prev_file_pos]
+
+  close_window()
+  api.nvim_command('edit ' .. prev_file)
+end
+
 local function quicknav()
   open_window()
   update_view()
@@ -140,5 +172,7 @@ return {
   update_view = update_view,
   go_to_file = go_to_file,
   move_cursor = move_cursor,
-  close_window = close_window
+  close_window = close_window,
+  go_to_next_file = go_to_next_file,
+  go_to_prev_file = go_to_prev_file
 }
