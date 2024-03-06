@@ -57,6 +57,7 @@ local function add_current_file()
 
   -- get current working directory with full path
   local cwd = vim.fn.getcwd()
+  cwd = tostring(cwd)
 
   -- remove cwd from current file
   local relative = string.gsub(current_file, cwd,  '')
