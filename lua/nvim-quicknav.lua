@@ -54,6 +54,10 @@ end
 
 local function add_current_file()
   local current_file = api.nvim_buf_get_name(0)
+
+  -- get current working directory with full path
+  current_file = vim.fn.fnamemodify(current_file, ':p')
+
   table.insert(pinned_files, current_file)
 end
 
@@ -73,7 +77,11 @@ local function update_pinned_files()
 end
 
 local function close_window()
-  update_pinned_files()
+  if #pinned_files > 0 then
+    update_pinned_files()
+  else
+    pinned_files = {}
+  end
   api.nvim_win_close(win, true)
 end
 
@@ -81,7 +89,7 @@ local function go_to_file()
   local selected_line = api.nvim_get_current_line()
 
   close_window()
-  api.nvim_command('tabnew ' .. selected_line)
+  api.nvim_command('edit ' .. selected_line)
 end
 
 local function move_cursor()
