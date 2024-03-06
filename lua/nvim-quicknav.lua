@@ -59,6 +59,7 @@ local function add_current_file()
   local cwd = vim.fn.getcwd()
   print(cwd)
   local relative = string.match(current_file, cwd .. '(.*)')
+  print(relative)
 
   table.insert(pinned_files, relative)
 end
