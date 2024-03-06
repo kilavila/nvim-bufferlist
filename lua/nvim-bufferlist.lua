@@ -156,8 +156,13 @@ local function bufferlist()
   api.nvim_win_set_cursor(win, { 1, 0 })
 end
 
+function open_window()
+  bufferlist()
+end
+
 return {
   bufferlist = bufferlist,
+  open_window = open_window,
   update_view = update_view,
   go_to_buffer = go_to_buffer,
   close_buffer = close_buffer,
