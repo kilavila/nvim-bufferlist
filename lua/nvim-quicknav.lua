@@ -117,12 +117,17 @@ local function set_mappings()
   end ]]
 end
 
+-- TODO: Fix navigation after user manually modifies pinned_files
+-- match current file with pinned_files by filename and extension only!
+
 local function go_to_next_file()
   -- get next file in pinned_files list and open it in buffer
   local current_file = api.nvim_buf_get_name(0)
 
   for i, file in ipairs(pinned_files) do
-    if file == current_file then
+    -- check if current_file is in pinned_files
+    -- only check filename and extension
+    if file:match('^.+%.') == current_file:match('^.+%.') then
       if i == #pinned_files then
         api.nvim_command('edit ' .. pinned_files[1])
       else
@@ -138,7 +143,7 @@ local function go_to_prev_file()
   local current_file = api.nvim_buf_get_name(0)
 
   for i, file in ipairs(pinned_files) do
-    if file == current_file then
+    if file:match('^.+%.') == current_file:match('^.+%.') then
       if i == 1 then
         api.nvim_command('edit ' .. pinned_files[#pinned_files])
       else
