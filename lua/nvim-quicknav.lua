@@ -118,10 +118,6 @@ local function set_mappings()
 end
 
 local function go_to_next_file()
-  if #pinned_files == 0 then
-    return
-  end
-
   local current_file = api.nvim_buf_get_name(0)
 
   local current_file_pos = 0
@@ -145,10 +141,6 @@ local function go_to_next_file()
 end
 
 local function go_to_prev_file()
-  if #pinned_files == 0 then
-    return
-  end
-
   local current_file = api.nvim_buf_get_name(0)
 
   local current_file_pos = 0
