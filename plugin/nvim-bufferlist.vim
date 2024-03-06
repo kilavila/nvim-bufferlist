@@ -7,7 +7,7 @@ hi def link BufferListHeader      Number
 
 command! BufferListOpen lua require'nvim-bufferlist'.bufferlist()
 command! BufferListClose lua require'nvim-bufferlist'.close_window()
-command! BufferListUpdate lua require'nvim-bufferlist'.update_view()
+
 command! QuickNavOpen lua require'nvim-quicknav'.quicknav()
 command! QuickNavAdd lua require'nvim-quicknav'.add_current_file()
 command! QuickNavNext lua require'nvim-quicknav'.go_to_next_file()
