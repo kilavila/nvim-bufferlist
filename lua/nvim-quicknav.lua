@@ -57,7 +57,7 @@ local function add_current_file()
 
   for buffer in string.gmatch(buffer_list, '([^\r\n]*)') do
     if string.match(buffer, '%d+') then
-      if string.match(buffer, '%d+.-(%a).-".-"') == '%a' then
+      if string.match(buffer, '%d+.-(%%a).-".-"') == '%a' then
         buffer = string.match(buffer, '"(.-)"')
         table.insert(pinned_files, buffer)
       end
