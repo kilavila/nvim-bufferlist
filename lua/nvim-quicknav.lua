@@ -56,9 +56,10 @@ local function add_current_file()
   local current_file = api.nvim_buf_get_name(0)
 
   -- get current working directory with full path
-  current_file = vim.fn.fnamemodify(current_file, ':p')
+  local cwd = vim.fn.getcwd()
+  current_file = string.match(current_file, cwd .. '(.*)')
 
-  table.insert(pinned_files, current_file)
+  table.insert(pinned_files, '.' .. current_file)
 end
 
 local function update_view()
