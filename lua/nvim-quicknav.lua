@@ -57,6 +57,7 @@ local function add_current_file()
 
   -- get current working directory with full path
   local cwd = vim.fn.getcwd()
+  print(cwd)
   local relative = string.match(current_file, cwd .. '(.*)')
 
   table.insert(pinned_files, relative)
