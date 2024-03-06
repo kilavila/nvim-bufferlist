@@ -118,13 +118,16 @@ local function set_mappings()
 end
 
 local function go_to_next_file()
+  if #pinned_files == 0 then
+    return
+  end
+
   local current_file = api.nvim_buf_get_name(0)
 
   local current_file_pos = 0
   for i, file in ipairs(pinned_files) do
     if file == current_file then
       current_file_pos = i
-      break
     end
   end
 
@@ -133,19 +136,25 @@ local function go_to_next_file()
     next_file_pos = 1
   end
   local next_file = pinned_files[next_file_pos]
+  print(current_file_pos)
+  print(next_file_pos)
+  print(next_file)
 
   close_window()
   api.nvim_command('edit ' .. next_file)
 end
 
 local function go_to_prev_file()
+  if #pinned_files == 0 then
+    return
+  end
+
   local current_file = api.nvim_buf_get_name(0)
 
   local current_file_pos = 0
   for i, file in ipairs(pinned_files) do
     if file == current_file then
       current_file_pos = i
-      break
     end
   end
 
@@ -154,6 +163,9 @@ local function go_to_prev_file()
     prev_file_pos = #pinned_files
   end
   local prev_file = pinned_files[prev_file_pos]
+  print(current_file_pos)
+  print(prev_file_pos)
+  print(prev_file)
 
   close_window()
   api.nvim_command('edit ' .. prev_file)
