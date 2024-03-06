@@ -53,20 +53,9 @@ local function open_window()
 end
 
 local function add_current_file()
-  local current_file = api.nvim_buf_get_name(0)
-  current_file = tostring(current_file)
+  local current_file = vim.fn.expand('%')
 
-  -- get current working directory with full path
-  local cwd = vim.fn.getcwd()
-  cwd = tostring(cwd)
-
-  -- remove cwd from current file
-  local relative = string.gsub(current_file, cwd,  '')
-  relative = tostring(relative)
-  print(cwd)
-  print(relative)
-
-  table.insert(pinned_files, relative)
+  table.insert(pinned_files, current_file)
 end
 
 local function update_view()
