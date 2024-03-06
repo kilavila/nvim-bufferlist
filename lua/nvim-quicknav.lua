@@ -126,7 +126,9 @@ local function get_pinned_index(direction)
       pinned_files_index = 1
     end
   else
-    if pinned_files_index > 1 then
+    if pinned_files_index > #pinned_files then
+      pinned_files_index = #pinned_files
+    elseif pinned_files_index > 1 then
       pinned_files_index = pinned_files_index - 1
     else
       pinned_files_index = #pinned_files
