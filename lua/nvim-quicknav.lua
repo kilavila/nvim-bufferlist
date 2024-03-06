@@ -76,16 +76,15 @@ local function update_pinned_files()
   pinned_files = {}
   local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
   for _, line in ipairs(lines) do
-    table.insert(pinned_files, line)
+    if line ~= '' then
+      table.insert(pinned_files, line)
+    end
   end
 end
 
 local function close_window()
-  if #pinned_files > 0 then
-    update_pinned_files()
-  else
-    pinned_files = {}
-  end
+  update_pinned_files()
+  pinned_files = {}
   api.nvim_win_close(win, true)
 end
 
