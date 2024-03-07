@@ -3,8 +3,14 @@ local buf, win
 
 local pinned_files = {}
 local pinned_files_index = 1
+local window_open = false
 
 local function open_window()
+  if window_open then
+    return
+  end
+  window_open = true
+
   buf = api.nvim_create_buf(false, true)
   local border_buf = api.nvim_create_buf(false, true)
 
@@ -79,6 +85,11 @@ local function update_pinned_files()
 end
 
 local function close_window()
+  if not window_open then
+    return
+  end
+  window_open = false
+
   update_pinned_files()
   api.nvim_win_close(win, true)
 end
